@@ -1,7 +1,7 @@
 import streamlit as st
 from transformers import pipeline
 
-model_dir = '/Users/aryamannsrivastava/Desktop/CS/ Sentiment Analysis/assignment-2/modelA2'  # Path to your model
+model_dir = '/Users/aryamannsrivastava/Desktop/IMPORTANT/Sentiment Analysis/Assignment-2/modelA2'  # Path to my model
 classifier = pipeline('text-classification', model=model_dir)
 
 st.title("Sentiment Analysis using BERT")
