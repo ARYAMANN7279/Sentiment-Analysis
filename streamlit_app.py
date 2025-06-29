@@ -5,7 +5,7 @@ model_dir = '/Users/aryamannsrivastava/Desktop/IMPORTANT/Sentiment Analysis/Assi
 classifier = pipeline('text-classification', model=model_dir)
 
 st.title("Sentiment Analysis using BERT")
-text_input = st.text_area("Enter texst for sentiment analysis:", "I love Streamlit!")
+text_input = st.text_area("Enter text for sentiment analysis:", "I love Streamlit!")
 
 if st.button('Predict Sentiment'):
     if text_input:
