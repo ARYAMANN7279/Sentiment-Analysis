@@ -1,21 +1,25 @@
+
 # Multimodal Sentiment Analysis
 
 A comprehensive machine learning project that combines text and image data for multiclass sentiment analysis using early fusion techniques. This project implements a multimodal deep learning model that analyzes memes and social media content across multiple dimensions including humor, sarcasm, offensiveness, motivational content, and overall sentiment.
 
+---
+
 ## 🎯 Project Overview
 
-This project employs **early fusion techniques** for multimodal sentiment analysis, where text (OCR-extracted and corrected) and image features are concatenated and jointly processed to predict multiple sentiment-related classifications. The model leverages the power of both textual understanding through DistilBERT and visual feature extraction through ResNet-18.
+This project employs **early fusion techniques** for multimodal sentiment analysis, where text (OCR-extracted and corrected) and image features are concatenated and jointly processed to predict multiple sentiment-related classifications. The model leverages the power of both textual understanding through **BERT** and visual feature extraction through **Vision Transformer (ViT)**.
 
 ### Key Features
 
-- **Multimodal Architecture**: Combines text and image modalities using early fusion
-- **Multi-task Learning**: Simultaneous prediction of 5 different classification tasks
-- **State-of-the-art Models**: DistilBERT for text processing and ResNet-18 for image analysis
-- **Comprehensive Analysis**: Includes data exploration, visualization, and model evaluation
+- **Multimodal Architecture**: Combines text and image modalities using early fusion  
+- **Multi-task Learning**: Simultaneous prediction of 5 different classification tasks  
+- **State-of-the-art Models**: BERT for text processing and Vision Transformer (ViT) for image analysis  
+- **Streamlit Deployment**: Real-time predictions through an interactive web app  
+- **Comprehensive Analysis**: Includes data exploration, visualization, and model evaluation  
+
+---
 
 ## 📊 Tasks and Classifications
-
-The model performs classification across five different dimensions:
 
 | Task | Classes | Description |
 |------|---------|-------------|
@@ -25,36 +29,34 @@ The model performs classification across five different dimensions:
 | **Motivational** | 2 classes | `not_motivational`, `motivational` |
 | **Overall Sentiment** | 5 classes | `very_negative`, `negative`, `neutral`, `positive`, `very_positive` |
 
+---
+
 ## 🏗️ Architecture
 
 ### Model Components
 
-1. **Text Encoder**: DistilBERT (`distilbert-base-uncased`)
-   - Processes OCR-extracted and corrected text
-   - Outputs 768-dimensional embeddings
-   - Reduced to 128 dimensions via linear layer
-
-2. **Image Encoder**: ResNet-18 (pre-trained)
-   - Processes 224x224 RGB images
-   - Modified final layer outputs 128 dimensions
-
-3. **Fusion Layer**: Early fusion via concatenation
-   - Combined features: 256 dimensions (128 text + 128 image)
-
-4. **Classification Heads**: Separate linear layers for each task
-   - Independent prediction heads for each of the 5 tasks
+1. **Text Encoder**: BERT (`bert-base-uncased`)  
+   - Outputs 768-d embeddings, reduced to 128-d via linear layer  
+2. **Image Encoder**: Vision Transformer (ViT) (pre-trained)  
+   - Final layer outputs 128-d image features  
+3. **Fusion Layer**: Early fusion via concatenation  
+   - Combined feature vector: 256-d  
+4. **Classification Heads**: One head per task  
+   - 5 separate linear layers for each classification dimension  
 
 ### Training Strategy
 
-- **Multi-task Learning**: Sequential training on each task
-- **Optimizer**: Adam with learning rate 1e-3
-- **Loss Function**: CrossEntropyLoss for each classification task
-- **Device**: CUDA-enabled training when available
+- **Multi-task Learning**: Sequential task-specific training  
+- **Optimizer**: Adam (`lr = 1e-3`)  
+- **Loss**: CrossEntropyLoss per task  
+- **Device**: CUDA if available  
+
+---
 
 ## 📁 Dataset Structure
 
 ```
-/Users/aryamannsrivastava/Desktop/IMPORTANT/Sentiment Analysis/Assignment-3/Multimodal_dataset_assignment3/
+Multimodal_dataset_assignment3/
 ├── labels.csv              # Main dataset file with labels and text
 └── images/                 # Directory containing all images
     ├── image_1.jpg
@@ -64,131 +66,159 @@ The model performs classification across five different dimensions:
 
 ### Dataset Features
 
-- **Images**: Various formats (jpg, jpeg, png, JPG)
-- **Text Data**: 
-  - `text_ocr`: Raw OCR-extracted text
-  - `text_corrected`: Manually corrected text
-- **Labels**: Both categorical and numerical encodings
-- **Metadata**: Image names and full paths
-
-
-
-## 🚀 Quick Start
-
-1. **Install Dependencies**
-   ```bash
-   pip install torch torchvision transformers pandas numpy pillow scikit-learn matplotlib seaborn
-   ```
-
-2. **Prepare Dataset**
-   - Ensure your dataset follows the structure shown above
-   - Update `data_path` and `image_folder` variables in the notebook
-
-3. **Train the Model**
-   ```python
-   # Run the Jupyter notebook
-   jupyter notebook train.ipynb
-   ```
-
-4. **Model Inference**
-   ```python
-   # Load trained model
-   model = MultimodalModel(num_classes_list=[4, 4, 4, 2, 5])
-   model.load_state_dict(torch.load("Multimodal_Model.pth"))
-   model.eval()
-   ```
-
-## 📈 Model Performance
-
-The model is evaluated using accuracy metrics for each classification task:
-
-- **Humor Classification**: Multi-class accuracy
-- **Sarcasm Detection**: Multi-class accuracy  
-- **Offensive Content Detection**: Multi-class accuracy
-- **Motivational Content Classification**: Binary accuracy
-- **Overall Sentiment Analysis**: Multi-class accuracy
-
-### Training Configuration
-
-- **Epochs**: 10
-- **Batch Size**: 32
-- **Train/Test Split**: 70/30
-- **Image Size**: 224x224 pixels
-- **Text Max Length**: Model default (DistilBERT)
-
-## 🔧 Code Structure
-
-### Core Classes
-
-1. **`MemotionDataset`**: Custom PyTorch Dataset
-   - Handles multimodal data loading
-   - Applies image transformations
-   - Tokenizes text input
-
-2. **`MultimodalModel`**: Main neural network architecture
-   - Implements early fusion strategy
-   - Separate classification heads for each task
-   - Forward pass combining text and image features
-
-### Key Functions
-
-- **Data Loading**: CSV reading and image path mapping
-- **Preprocessing**: Image transformations and text tokenization
-- **Training Loop**: Multi-task learning with separate optimization
-- **Evaluation**: Accuracy calculation per task
-
-## 📊 Data Analysis Features
-
-The notebook includes comprehensive exploratory data analysis:
-
-- **Class Distribution Visualization**: Bar plots for each classification task
-- **Text Analysis**: Word count analysis per sentiment class
-- **Data Quality Checks**: Missing value detection and handling
-- **Label Encoding**: Categorical to numerical conversion
-
-## 🎨 Visualization
-
-The project includes various visualization components:
-
-- Class frequency distributions
-- Box plots for text length analysis
-- Training progress tracking
-- Model performance metrics per task
-
-## 💾 Model Persistence
-
-The trained model is saved as:
-- **File**: `Multimodal_Model.pth`
-- **Format**: PyTorch state dictionary
-- **Loading**: Compatible with the `MultimodalModel` class
-
-## 🔄 Future Enhancements
-
-Potential improvements and extensions:
-
-1. **Advanced Fusion Techniques**: Implement attention-based fusion
-2. **Model Architecture**: Experiment with larger pre-trained models
-3. **Data Augmentation**: Add image and text augmentation techniques
-4. **Hyperparameter Tuning**: Systematic optimization of training parameters
-5. **Cross-validation**: Implement k-fold cross-validation
-6. **Additional Metrics**: Include precision, recall, and F1-scores
-
-## 📚 References
-
-- **DistilBERT**: Sanh, V., et al. "DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter." (2019)
-- **ResNet**: He, K., et al. "Deep residual learning for image recognition." (2016)
-- **Multimodal Learning**: Baltrusaitis, T., et al. "Multimodal machine learning: A survey and taxonomy." (2018)
-
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to:
-- Report bugs and issues
-- Suggest new features or improvements
-- Submit pull requests
-- Share experimental results
-
+- `text_ocr`: Raw OCR text  
+- `text_corrected`: Manually corrected text  
+- Image paths + sentiment labels in CSV  
 
 ---
 
-*This project represents a comprehensive approach to multimodal sentiment analysis, combining the latest advances in natural language processing and computer vision for enhanced understanding of multimedia content.*
+## 🚀 Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pip install torch torchvision transformers pandas numpy pillow scikit-learn matplotlib seaborn streamlit
+```
+
+### 2. Prepare Dataset
+
+- Match the directory structure above  
+- Update `data_path` and `image_folder` in the notebook or script  
+
+### 3. Train the Model
+
+```bash
+jupyter notebook train.ipynb
+```
+
+### 4. Run Inference
+
+```python
+model = MultimodalModel(num_classes_list=[4, 4, 4, 2, 5])
+model.load_state_dict(torch.load("Multimodal_Model.pth"))
+model.eval()
+```
+
+---
+
+## 🌐 Streamlit Web App
+
+The trained model is deployed using **Streamlit**, allowing real-time predictions directly from the browser.
+
+### 🔍 Features
+
+- Upload memes or social media images  
+- View OCR-extracted and corrected text  
+- Instant predictions for:
+  - Humor level
+  - Sarcasm intensity
+  - Offensive tone
+  - Motivational nature
+  - Overall sentiment  
+- Visual display of predictions alongside the uploaded image  
+
+### ▶️ Run Locally
+
+```bash
+streamlit run app.py
+```
+
+### 📦 App File Structure
+
+```
+app.py                           # Main Streamlit app
+Multimodal_Model.pth             # Trained model weights
+utils/
+├── ocr_utils.py                 # Text extraction and correction
+├── preprocessing.py             # Image transforms and tokenization
+├── inference.py                 # Model loading and prediction logic
+```
+
+---
+
+## 📈 Model Performance
+
+- **Humor**: Multi-class accuracy  
+- **Sarcasm**: Multi-class accuracy  
+- **Offensive**: Multi-class accuracy  
+- **Motivational**: Binary accuracy  
+- **Sentiment**: Multi-class accuracy  
+
+### Training Configuration
+
+- **Epochs**: 10  
+- **Batch Size**: 32  
+- **Train/Test Split**: 70/30  
+- **Image Size**: 224x224  
+- **Text Max Length**: BERT default  
+
+---
+
+## 🔧 Code Structure
+
+| Component | Description |
+|----------|-------------|
+| `MemotionDataset` | Custom PyTorch dataset class for loading and preprocessing |
+| `MultimodalModel` | Core model architecture (BERT + ViT + fusion) |
+| `train.ipynb` | Training loop with multi-task loss |
+| `app.py` | Streamlit web application |
+| `utils/` | Utility scripts for preprocessing, OCR, and inference |
+
+---
+
+## 📊 Data Analysis Features
+
+- Class distribution plots  
+- Word count per sentiment class  
+- Missing value handling  
+- Categorical to numerical label conversion  
+
+---
+
+## 🎨 Visualization
+
+- Sentiment class frequencies  
+- Box plots for text length  
+- Training loss and accuracy curves  
+- Per-task evaluation metrics  
+
+---
+
+## 💾 Model Persistence
+
+- **File**: `Multimodal_Model.pth`  
+- **Format**: PyTorch `state_dict`  
+- **Usage**: Load via `MultimodalModel` class  
+
+---
+
+## 🔄 Future Enhancements
+
+- [ ] Attention-based fusion mechanisms  
+- [ ] Larger pre-trained models (e.g., ViT, RoBERTa)  
+- [ ] Image and text data augmentation  
+- [ ] Hyperparameter optimization  
+- [ ] K-fold cross-validation  
+- [ ] Additional metrics: F1, precision, recall  
+
+---
+
+## 📚 References
+
+- Sanh, V. et al. *BERT: A distilled version of BERT* (2019)  
+- He, K. et al. *Deep Residual Learning for Image Recognition* (2016)  
+- Baltrusaitis, T. et al. *Multimodal Machine Learning: A Survey and Taxonomy* (2018)  
+
+---
+
+## 🤝 Contributing
+
+You're welcome to contribute!  
+- Report bugs  
+- Suggest enhancements  
+- Submit pull requests  
+- Share experimental results  
+
+---
+
+*This project represents a full-stack solution to multimodal sentiment analysis — from data preprocessing and model training to real-time deployment via Streamlit.*
