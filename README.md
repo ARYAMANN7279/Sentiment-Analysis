@@ -39,7 +39,7 @@ This project employs **early fusion techniques** for multimodal sentiment analys
    - Outputs 768-d embeddings, reduced to 128-d via linear layer  
 2. **Image Encoder**: Vision Transformer (ViT) (pre-trained)  
    - Final layer outputs 128-d image features  
-3. **Fusion Layer**: Early fusion via concatenation  
+3. **Cross Attention Layer**: Early fusion via concatenation  
    - Combined feature vector: 256-d  
 4. **Classification Heads**: One head per task  
    - 5 separate linear layers for each classification dimension  
