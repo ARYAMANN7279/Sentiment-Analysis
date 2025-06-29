@@ -54,7 +54,7 @@ The model performs classification across five different dimensions:
 ## 📁 Dataset Structure
 
 ```
-Multimodal_dataset_assignment3/
+/Users/aryamannsrivastava/Desktop/IMPORTANT/Sentiment Analysis/Assignment-3/Multimodal_dataset_assignment3/
 ├── labels.csv              # Main dataset file with labels and text
 └── images/                 # Directory containing all images
     ├── image_1.jpg
