@@ -19,6 +19,9 @@ This project employs **early fusion techniques** for multimodal sentiment analys
 
 ---
 
+![image](https://github.com/user-attachments/assets/45c68031-5146-4a82-8358-c0716dc37086)
+
+
 ## 📊 Tasks and Classifications
 
 | Task | Classes | Description |
